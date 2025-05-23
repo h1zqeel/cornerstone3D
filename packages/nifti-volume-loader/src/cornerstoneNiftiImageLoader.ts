@@ -197,6 +197,10 @@ function waitForNiftiData(
   return new Promise((resolve) => {
     const intervalId = setInterval(() => {
       const dataFetchState = dataFetchStateMap.get(url);
+      if (!dataFetchState) {
+        clearInterval(intervalId);
+        return;
+      }
       if (dataFetchState.status === 'fetched') {
         clearInterval(intervalId);
         resolve(
